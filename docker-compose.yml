@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  baratsuki_fe:
+    build: ./frontend
+    container_name: baratsuki_fe
+    ports:
+      - 3004:3004
+    volumes:
+      - ./frontend/:/usr/app/
+      - dependencies:/usr/app/node_modules
+    restart: always
+  baratsuki_be:
+    build: ./backend
+    container_name: baratsuki_be
+    ports:
+      - 8004:8004
+    volumes:
+      - ./backend/:/code/
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8004
+volumes:
+  dependencies:
